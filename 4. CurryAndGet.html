@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CurryAndGet</title>
+</head>
+<body>
+
+</body>
+</html>
+<script src="_.js"></script>
+<script>
+  let users = [
+    { id: 1, name: 'ID', age: 36 },
+    { id: 2, name: 'BJ', age: 32 },
+    { id: 3, name: 'JM', age: 32 },
+    { id: 4, name: 'PJ', age: 27 },
+    { id: 5, name: 'HA', age: 25 },
+    { id: 6, name: 'JE', age: 26 },
+    { id: 7, name: 'JI', age: 31 },
+    { id: 8, name: 'MP', age: 23 }
+  ]
+  /*
+  let add = function (a, b) {
+    return a + b
+  }
+  console.log( add(10, 5) )
+  */
+
+  let add = _curry(function (a, b) {
+    return a + b
+  })
+
+  let add10 = add(10)
+  console.log( 'add10(5)', add10(5) )
+  console.log( 'add(5)(3)', add(5)(3) )
+
+  /*
+  if the _curry function is like below, function with two arguments will return function.
+  function _curry(fn) {
+    return function (a) {
+      return function (b) {
+        return fn(a, b)
+      }
+    }
+  }
+  console.log( add(1, 2) )
+  */
+
+  let sub = _curry(function (a, b) {
+    return a - b
+  })
+
+  console.log( 'sub(10, 5)', sub(10, 5) )
+
+  let sub10 = sub(10)
+  console.log( 'sub10(5)', sub10(5) )
+
+  let subr = _curryr(function (a, b) {
+    return a - b
+  })
+
+  console.log( 'subr(10, 5)', subr(10, 5) )
+
+  let subr10 = subr(10)
+  console.log( 'subr10(5)', subr10(5) )
+
+  /*
+  function _get(obj, key) {
+    return obj == null ? undefined : obj[key]
+  }
+  */
+
+  let user1 = users[0]
+  console.log('user1.name', user1.name)
+  console.log('_get(user1, \'name\')', _get(user1, 'name'))
+
+  /*
+  Uncaught TypeError: Cannot read property 'name' of undefined
+  console.log(users[10].name)
+  */
+  console.log( _get(users[10], 'name'))
+
+  console.log('over_30 names using _get',
+      _map(_filter(users, function (user) { return user.age >= 30 }),
+          _get('name')))
+
+  console.log('under_30 ages using _get',
+      _map(_filter(users, function (user) { return user.age < 30 }),
+          _get('age')))
+</script>
