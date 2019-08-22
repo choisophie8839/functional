@@ -7,6 +7,7 @@
 <body>
 </body>
 </html>
+<script src="_.js"></script>
 <script>
   let users = [
     { id: 1, name: 'ID', age: 36 },
@@ -18,31 +19,6 @@
     { id: 7, name: 'JI', age: 31 },
     { id: 8, name: 'MP', age: 23 }
   ]
-
-  function _filter(list, predi) {
-    let new_list= []
-    for (let i=0; i<list.length; i++) {
-      if (predi(list[i])) {
-        new_list.push(list[i]);
-      }
-    }
-    return new_list
-  }
-
-  function _map(list, mapper) {
-    let new_list = []
-    for (let i=0; i<list.length; i++) {
-      new_list.push(mapper(list[i]))
-    }
-    return new_list
-  }
-
-  function _each(list, iter) {
-    for (let i=0; i<list.length; i++) {
-      iter(list[i])
-    }
-    return list
-  }
 
   console.log(_filter([1,2,3,4], function (num) {
     return num % 2
@@ -76,7 +52,7 @@
       _map(_filter(users, function (user) { return user.age >= 30 }),
       function (user) { return user.name }))
 
-  console.log('under_30 names',
+  console.log('under_30 ages',
       _map(_filter(users, function (user) { return user.age < 30 }),
           function (user) { return user.age }))
 
