@@ -36,3 +36,18 @@ function _curryr(fn) {
 const _get = _curryr(function (obj, key) {
   return obj == null ? undefined : obj[key]
 })
+
+let slice = Array.prototype.slice
+function _rest(list, num) {
+  return slice.call(list, num || 1)
+}
+function _reduce(list, iter, memo) {
+  if (arguments.length == 2) {
+    memo = list[0]
+    list = _rest(list)
+  }
+  _each(list, function (val) {
+    memo = iter(memo, val)
+  })
+  return memo
+}
