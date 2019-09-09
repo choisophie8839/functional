@@ -21,14 +21,7 @@
     { id: 8, name: 'MP', age: 23 }
   ]
   // _pipe returns function
-  function _pipe() {
-    let fns = arguments
-    return function (arg) {
-      return _reduce(fns, function (arg, fn) {
-        return fn(arg)
-      }, arg)
-    }
-  }
+
 
   let f1 = _pipe(
       function (a) { return a + 1 }, // 1 + 2
@@ -36,14 +29,6 @@
   )
 
   console.log( f1(1) )
-
-  // _go gets first argument and operates functions
-  // arguments are array-like object, if we use _rest function,
-  // we can get only function objects without first argument
-  function _go (arg) {
-    let fns = _rest(arguments)
-    return _pipe.apply(null, fns)(arg)
-  }
 
   //get first argument and chain the functions below
   _go (1,
@@ -75,8 +60,6 @@
       _filterr(function (user) { return user.age >= 30 }),
       _mapr(_get('name')),
       console.log)
-
-
 
 
 
@@ -115,5 +98,10 @@
     return a + b
   }
   let add3 = (a, b) => ({val: a + b})
+
+  //var _length = _get('length')
+  //when you put null as list, normally it makes error but if you use _get function at _each function,
+  //it will make no errors because
+  _each(null, console.log);
 
 </script>

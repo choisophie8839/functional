@@ -8,15 +8,25 @@ function _filter(list, predi) {
 
 function _map(list, mapper) {
   let new_list = []
-  _each(list, function (val) {
-    new_list.push(mapper(val))
+  _each(list, function (val, key) {
+    new_list.push(mapper(val, key))
   })
   return new_list
 }
 
+function _is_object(obj) {
+  return typeof obj == 'object' && !!obj
+}
+
+function _keys(obj) {
+  return _is_object(obj)? Object.keys(obj): []
+}
+
 function _each(list, iter) {
-  for (let i=0; i<list.length; i++) {
-    iter(list[i])
+  let keys = _keys(list)
+  let len = keys.length
+  for (let i=0; i<len; i++ ) {
+    iter(list[keys[i]], keys[i])
   }
   return list
 }
@@ -33,11 +43,16 @@ function _curryr(fn) {
   }
 }
 
-const _get = _curryr(function (obj, key) {
+var _map = _curryr(_map)
+var _each = _curryr(_each)
+var _filter = _curryr(_filter)
+
+
+var _get = _curryr(function (obj, key) {
   return obj == null ? undefined : obj[key]
 })
 
-let slice = Array.prototype.slice
+var slice = Array.prototype.slice
 function _rest(list, num) {
   return slice.call(list, num || 1)
 }
@@ -50,4 +65,23 @@ function _reduce(list, iter, memo) {
     memo = iter(memo, val)
   })
   return memo
+}
+
+var _length = _get('length')
+
+function _pipe() {
+  let fns = arguments
+  return function (arg) {
+    return _reduce(fns, function (arg, fn) {
+      return fn(arg)
+    }, arg)
+  }
+}
+
+// _go gets first argument and operates functions
+// arguments are array-like object, if we use _rest function,
+// we can get only function objects without first argument
+function _go (arg) {
+  let fns = _rest(arguments)
+  return _pipe.apply(null, fns)(arg)
 }

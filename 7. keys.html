@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Keys</title>
+</head>
+<body>
+
+</body>
+</html>
+
+<script src="_.js"></script>
+<script>
+  let users = [
+    { id: 1, name: 'ID', age: 36 },
+    { id: 2, name: 'BJ', age: 32 },
+    { id: 3, name: 'JM', age: 32 },
+    { id: 4, name: 'PJ', age: 27 },
+    { id: 5, name: 'HA', age: 25 },
+    { id: 6, name: 'JE', age: 26 },
+    { id: 7, name: 'JI', age: 31 },
+    { id: 8, name: 'MP', age: 23 }
+  ]
+  // polymorphism increase in _each
+  _each(null, console.log);
+  console.log(_filter(null, function (v) {
+    return v;
+  }))
+  console.log(_filter(null, function (v) {
+    return v;
+  }))
+
+  //Object. keys if put null -> it returns error
+  //check whether it is object or not.
+  console.log(_keys(null))
+
+  _each({
+    13 : 'ID',
+    19 : 'HD',
+    29 : 'YD'
+  }, function (name) {
+    console.log(name)
+  })
+
+  console.log(_map({
+    13 : 'ID',
+    19 : 'HD',
+    29 : 'YD'
+  }, function (name) {
+    return name.toLowerCase()
+  }))
+  let _mapr = _curryr(_map)
+  _go({
+    1 : users[0],
+    3 : users[2],
+    5 : users[4]
+  }, _mapr(function (user) {
+    return user.name.toLowerCase()
+  }), console.log)
+
+</script>
